@@ -3,6 +3,7 @@
 
 <head>
   <title>Shanglin Wu</title>
+
   <meta name="theme-color" content="" />
   <meta charset="utf-8" />
   <meta content="width=device-width, initial-scale=1.0" name="viewport" />
@@ -21,10 +22,51 @@
   <link rel="stylesheet" href="https://cdn.rawgit.com/jpswalsh/academicons/master/css/academicons.min.css" />
   <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Didact+Gothic%7CRoboto:400%7CRoboto+Mono" />
   <link rel="stylesheet" href="/css/aafu.css" />
+
+
   <link rel="stylesheet" href="/css/aafu_compiled.css" />
 
+
+
   <script>
-    // Your existing JavaScript for theme toggling
+    let html = document.querySelector("html");
+    let theme = window.localStorage.getItem("theme");
+    if (theme) {
+      theme === "dark"
+        ? html.classList.add("dark")
+        : html.classList.remove("dark");
+    } else if (html.classList.contains("dark")) {
+      window.localStorage.setItem("theme", "dark");
+    } else {
+      html.classList.remove("dark");
+      window.localStorage.setItem("theme", "light");
+    }
+
+    window.onload = () => {
+      let themeToggle = document.querySelector(".theme-toggle");
+      if (window.localStorage.getItem("theme") === "dark") {
+        themeToggle.classList.remove("bi-moon-fill");
+        themeToggle.classList.add("bi-brightness-high");
+      } else {
+        themeToggle.classList.add("bi-moon-fill");
+        themeToggle.classList.remove("bi-brightness-high");
+      }
+
+      let defaultActivePanel = document.querySelector(".accordion.active");
+      if (defaultActivePanel) {
+        defaultActivePanel.nextElementSibling.style.maxHeight =
+          defaultActivePanel.nextElementSibling.scrollHeight + "px";
+      }
+    };
+
+
+    window.onresize = () => {
+      let defaultActivePanel = document.querySelector(".accordion.active");
+      if (defaultActivePanel) {
+        defaultActivePanel.nextElementSibling.style.maxHeight =
+          defaultActivePanel.nextElementSibling.scrollHeight + "px";
+      }
+    };
   </script>
 </head>
 
@@ -34,88 +76,255 @@
       <a class="mr-4 no-underline p-2 rounded hover:bg-gray-200 dark:hover:bg-gray-800"
         href="https://ShanglinWu.github.io/">Home</a>
     </div>
+
     <i class="fas fa-sun theme-toggle text-blue-500 hover:text-blue-700 dark:text-yellow-300 dark:hover:text-yellow-500 cursor-pointer text-lg mr-9 sm:mr-0"
       onclick="lightDark(this)"></i>
   </header>
 
+  <script>
+    const lightDark = (el) => {
+      let html = document.querySelector("html");
+      if (html.classList.contains("dark")) {
+        html.classList.remove("dark");
+        el.classList.add("fa-moon");
+        el.classList.remove("fa-sun");
+        window.localStorage.setItem("theme", "light");
+      } else {
+        html.classList.add("dark");
+        el.classList.add("fa-sun");
+        el.classList.remove("fa-moon");
+        window.localStorage.setItem("theme", "dark");
+      }
+    };
+  </script>
+
   <main class="grow">
     <div class="grid grid-cols-1 md:grid-cols-5 gap-2 sm py-2">
       <div class="col-span-2">
-        <!-- Profile section -->
         <div class="bg-gray-300 dark:bg-darker rounded drop-shadow-md p-2">
-          <!-- Your existing profile content -->
+          <div class="flex flex-col justify-center">
+            <div class="">
+              <div class="w-100 h-100 flex justify-center p-4">
+                <img class="rounded rounded-full" src="/images/profile.jpg" alt="Jason Wu" style="max-width: 250px" />
+              </div>
+            </div>
+            <div class="p-2 text-center">
+              <h1 class="mb-0">Shanglin Wu.</h1>
+              <h2 class="mb-0">Undergraduate Student</h2>
+              <h3 class="mb-4">Peking University</h3>
+              <div class="mb-4 flex flex-wrap justify-center">
+
+                <div class="mx-2">
+                  <a class="text-2xl" href="https://github.com/ShanglinWu?tab=repositories">
+                    <i class="mt-1 fab fa-github"></i>
+                  </a>
+                </div>
+
+                <div class="mx-2">
+                  <a class="text-2xl" href="mailto:jasonwu1017@stu.pku.edu.cn">
+                    <i class="mt-1 fa fa-envelope"></i>
+                  </a>
+                </div>
+
+              </div>
+              <footer class="text-sm text-center border-t border-gray-300 dark:border-gray-700  pt-2 ">
+                <p class="markdownify">short copyright message</p>
+                <p>
+                  <i>
+                    <a href="https://github.com/darshanbaral/aafu">
+                      aafu
+                    </a>
+                  </i>
+                  by
+                  <a href="https://www.darshanbaral.com/">
+                    darshan
+                  </a>
+                </p>
+              </footer>
+
+            </div>
+          </div>
         </div>
       </div>
       <div class="col-span-3 relative">
-        <!-- About Me section -->
+
         <div class="px-2">
           <h2 class="my-0 accordion active">
+
             <p class="hover:bg-gray-300 rounded dark:hover:bg-darker m-0 p-2" onclick="expandAccordion(this)"
               style="cursor: pointer">
-              <i class="fas fa-user"></i> About Me
+              <i class="fas fa-user"></i>
+              About Me
             </p>
           </h2>
+
           <div class="panel overflow-hidden px-2 ml-2">
-            <!-- Your existing About Me content -->
+            <div class="">
+              <p class="markdownify">
+                Hi! I&rsquo;m Shanglin(Jason) Wu. I&rsquo;m an final-year undergraduate student from Yuanpei College,
+                Peking
+                University and I&rsquo;m major in artificial intelligence. I&rsquo;m also a member of Tong class which
+                is a program founded by <a href="http://www.stat.ucla.edu/~sczhu/">Prof. Song-Chun Zhu</a>. I&rsquo;m
+                insterested in Natural Language Processing, Interpretable Machine Learning, and Trustworthy AI. My
+                current research focuses on better comprehending knowledge representations of Large Language
+                Models(LLMs) by using Mechanistic Interpretability(MI) methods.
+              </p>
+            </div>
           </div>
         </div>
 
-        <!-- Education section -->
+
+
+        <!--Education-->
+
         <div class="px-2">
           <h2 class="my-0 accordion">
+
             <p class="hover:bg-gray-300 rounded dark:hover:bg-darker m-0 p-2" onclick="expandAccordion(this)"
               style="cursor: pointer">
-              <i class="fas fa-graduation-cap"></i> Education
+              <i class="fas fa-graduation-cap"></i>
+              Education
             </p>
           </h2>
+
           <div class="panel overflow-hidden px-2 ml-2">
-            <!-- Your existing Education content -->
+            <div class="">
+
+              <h4 style="text-decoration: underline;">Undergraduate Program</h4>
+              <p>2021- &middot; Peking University(PKU)</p>
+
+
+            </div>
           </div>
         </div>
 
-        <!-- Research Experiences section -->
+
+
+        <!--Research Experiences-->
+
         <div class="px-2">
           <h2 class="my-0 accordion">
+
             <p class="hover:bg-gray-300 rounded dark:hover:bg-darker m-0 p-2" onclick="expandAccordion(this)"
               style="cursor: pointer">
-              <i class="fas fa-project-diagram"></i> Research Experiences
+              <i class="fas fa-project-diagram"></i>
+              Research Experiences
             </p>
           </h2>
+
           <div class="panel overflow-hidden px-2 ml-2">
-            <!-- Your existing Research Experiences content -->
+            <div class="">
+
+              <h4></h4>
+              <a href="https://hanjiechen.github.io/group.html">Visiting Student at Rice University</a>
+              </h4>
+              <p class="markdownify indent-8">Visiting Rice University under the supervision of <a
+                  href="https://hanjiechen.github.io/index.html">Prof. Hanjie Chen</a>. Investigating reasoning ability
+                transfer in Cot-KD(Chain-of-Thought Knowledge Distillation) by using Mechanistic Interpretability.
+              </p>
+
+              <h4>
+                <a href="https://conferences.cis.um.edu.mo/ijtcs2023/index.html">Giving talk at International Joint
+                  Conference on Theoretical Computer Science(IJTCS) about Consciouse Turing Machine
+                  work.</a>
+              </h4>
+              <p class="markdownify indent-8">Attend to the course held by Manuel Blum and Lenore Blum from CMU. Point
+                out a possible machanism on how a Consciouse Turing Machine Model generating self-consciouseness in the
+                <a href="shanglinwu.github.io/folder/CTM.pdf/">project</a>. Be invited to participate in International
+                Joint Conference on Theoretical Computer Science(IJTCS) and held a talk about the project.
+              </p>
+
+              <h4></h4>
+              <a href="https://cclab.ucsd.edu/primate-studies/">Visiting Student at UCSanDiego</a>
+              </h4>
+              <p class="markdownify indent-8">Visiting Comparative Cognetive Lab(CCL) in Cognetive
+                Department, UCSD under the supervision of <a
+                  href="https://cogsci.ucsd.edu/people/faculty/federico-rossano.html">Prof. Federico Rossano</a>.
+                Building up wireless devices for researches about Japanese macaques, go in field collecting datas in
+                Texas.</p>
+
+            </div>
           </div>
         </div>
 
-        <!-- Internships section -->
+
+
+
+
+
+
+        <!--Internships-->
+
         <div class="px-2">
           <h2 class="my-0 accordion">
+
             <p class="hover:bg-gray-300 rounded dark:hover:bg-darker m-0 p-2" onclick="expandAccordion(this)"
               style="cursor: pointer">
-              <i class="fas fa-briefcase"></i> Internships
+              <i class="fas fa-briefcase"></i>
+              Internships
             </p>
           </h2>
+
           <div class="panel overflow-hidden px-2 ml-2">
-            <!-- Your existing Internships content -->
+            <div class="">
+              <h4>
+                <a href="https://www.pdnews.cn/prod">Product Manager Internship in Digital Media Center of People's
+                  Daily</a>
+              </h4>
+              <p class="markdownify indent-8">Internship in Digital Media Center of People's Daily, corperating with Ali
+                Cloud team. Attending to the development of a PUGC platform which is publiced
+                <a href="https://www.pdnews.cn/prod">online</a>.
+              </p>
+
+
+            </div>
           </div>
         </div>
 
-        <!-- Rewards and Honors section -->
+
+
+
+
+        <!--Rewards and Honors-->
+
         <div class="px-2">
           <h2 class="my-0 accordion">
+
             <p class="hover:bg-gray-300 rounded dark:hover:bg-darker m-0 p-2" onclick="expandAccordion(this)"
               style="cursor: pointer">
-              <i class="fas fa-medal"></i> Rewards and Honors
+              <!--Icons usin Font Awesome 5, reference here:https://www.w3schools.com/icons/icons_reference.asp-->
+              <i class="fas fa-medal"></i>
+              Rewards and Honors
             </p>
           </h2>
+
           <div class="panel overflow-hidden px-2 ml-2">
-            <!-- Your existing Rewards and Honors content -->
+            <div class="">
+              <h4>
+                <a href="https://www.gotopku.cn/programa/page/17.html">The Third Prize of PKU Freshman Scholarship </a>
+              </h4>
+
+              <h4></h4>
+              <a
+                href="https://research.polyu.edu.hk/en/activities/iscom-2023-national-conference-on-supply-chain-and-operations-man">Research
+                Competition Paper Award at ISCOM 2023 National Conference on Supply Chain and Operations Management</a>
+              </h4>
+
+
+
+
+
+            </div>
           </div>
         </div>
+
+
+        <script src="/js/accordion.js"></script>
       </div>
     </div>
+
   </main>
 
-  <script src="/js/accordion.js"></script>
 </body>
 
 </html>
